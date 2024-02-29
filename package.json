@@ -8,7 +8,7 @@
     "dist"
   ],
   "scripts": {
-    "dev": "vite",
+    "dev": "node --loader ts-node/esm ./src/server/main.ts",
     "prebuild": "tsc",
     "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
     "build:client": "vite build --outDir dist/client",
