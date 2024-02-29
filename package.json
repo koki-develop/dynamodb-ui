@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "bin": "./dist/server/main.js",
+  "files": ["dist"],
   "scripts": {
     "dev": "vite",
     "prebuild": "tsc",
