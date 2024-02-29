@@ -5,6 +5,7 @@ import { createServer } from "vite";
   const app = express();
   const vite = await createServer({
     server: { middlewareMode: true },
+    logLevel: import.meta.env.PROD ? "silent" : "info",
   });
   app.get("/api/hello", (_req, res) => {
     res.status(200).json({ message: "Hello, world!" });
