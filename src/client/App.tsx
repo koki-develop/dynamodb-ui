@@ -1,3 +1,5 @@
+import { MantineProvider } from "@mantine/core";
+
 export default function App() {
-  return <div>hello world</div>;
+  return <MantineProvider>hello world</MantineProvider>;
 }
