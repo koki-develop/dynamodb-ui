@@ -15,7 +15,7 @@ export class ItemsController {
     const response = await this.dbClient.send(
       new ScanCommand({
         TableName: input.name,
-        Limit: input.limit,
+        Limit: input.limit ?? 100,
         ExclusiveStartKey: input.exclusiveStartKey,
       }),
     );
