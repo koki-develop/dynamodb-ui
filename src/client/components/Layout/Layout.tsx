@@ -1,5 +1,22 @@
-import { Outlet } from "react-router-dom";
+import { Anchor, Box, Container, Paper, Title } from "@mantine/core";
+import { Link, Outlet } from "react-router-dom";
 
 export default function Layout() {
-  return <Outlet />;
+  return (
+    <Box>
+      <Paper component="header" shadow="xs" radius={0}>
+        <Container classNames={{ root: "flex" }} py="xs">
+          <Anchor component={Link} to="/">
+            <Title order={1} size="h2">
+              DynamoDB UI
+            </Title>
+          </Anchor>
+        </Container>
+      </Paper>
+
+      <main>
+        <Outlet />
+      </main>
+    </Box>
+  );
 }

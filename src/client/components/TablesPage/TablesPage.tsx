@@ -1,6 +1,14 @@
 import Loader from "@/client/components/util/Loader";
 import { useTables } from "@/client/lib/tables";
-import { ActionIcon, Anchor, Box, Container, Table, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Anchor,
+  Box,
+  Container,
+  Paper,
+  Table,
+  Text,
+} from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -22,32 +30,34 @@ export default function TablesPage() {
   return (
     <Container py="md" size="sm">
       <Box>
-        <Table withTableBorder horizontalSpacing="md" verticalSpacing="md">
-          <Table.Thead>
-            <Table.Tr>
-              <Table.Th>Table Name</Table.Th>
-              <Table.Th>Item Count</Table.Th>
-              <Table.Th />
-            </Table.Tr>
-          </Table.Thead>
-          <Table.Tbody>
-            {tables.map((table) => (
-              <Table.Tr key={table.TableName}>
-                <Table.Td>
-                  <Anchor component={Link} to={`/table/${table.TableName}`}>
-                    {table.TableName}
-                  </Anchor>
-                </Table.Td>
-                <Table.Td>{table.ItemCount?.toLocaleString()}</Table.Td>
-                <Table.Td align="right">
-                  <ActionIcon variant="transparent" c="gray">
-                    <IconDots />
-                  </ActionIcon>
-                </Table.Td>
+        <Paper shadow="xs" px="md">
+          <Table horizontalSpacing="md" verticalSpacing="md">
+            <Table.Thead>
+              <Table.Tr>
+                <Table.Th>Table Name</Table.Th>
+                <Table.Th>Item Count</Table.Th>
+                <Table.Th />
               </Table.Tr>
-            ))}
-          </Table.Tbody>
-        </Table>
+            </Table.Thead>
+            <Table.Tbody>
+              {tables.map((table) => (
+                <Table.Tr key={table.TableName}>
+                  <Table.Td>
+                    <Anchor component={Link} to={`/table/${table.TableName}`}>
+                      {table.TableName}
+                    </Anchor>
+                  </Table.Td>
+                  <Table.Td>{table.ItemCount?.toLocaleString()}</Table.Td>
+                  <Table.Td align="right">
+                    <ActionIcon variant="transparent" c="gray">
+                      <IconDots />
+                    </ActionIcon>
+                  </Table.Td>
+                </Table.Tr>
+              ))}
+            </Table.Tbody>
+          </Table>
+        </Paper>
       </Box>
     </Container>
   );
