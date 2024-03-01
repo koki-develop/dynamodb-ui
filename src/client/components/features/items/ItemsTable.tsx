@@ -46,9 +46,9 @@ export default function TablePage({ table }: ItemsTableProps) {
 
   return (
     <Paper shadow="xs">
-      <Table.ScrollContainer minWidth={500}>
+      <Table.ScrollContainer minWidth={500} type="native">
         <Box px="sm">
-          <Table horizontalSpacing="md" verticalSpacing="md">
+          <Table horizontalSpacing="sm">
             <Table.Thead>
               <Table.Tr>
                 {headers.map((header, i) => (
