@@ -9,6 +9,7 @@
   ],
   "scripts": {
     "dev": "vite-node ./src/server/server.ts",
+    "test": "vitest",
     "prebuild": "tsc",
     "build": "concurrently \"npm run build:client\" \"npm run build:server\"",
     "build:client": "vite build --outDir dist/client",
