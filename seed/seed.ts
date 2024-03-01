@@ -1,13 +1,13 @@
 import {
-  DynamoDBClient,
-  CreateTableCommand,
   BatchWriteItemCommand,
+  CreateTableCommand,
+  DynamoDBClient,
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
-import usersTableInput from "./tables/users";
-import postsTableInput from "./tables/posts";
-import users from "./items/users";
 import posts from "./items/posts";
+import users from "./items/users";
+import postsTableInput from "./tables/posts";
+import usersTableInput from "./tables/users";
 
 (async () => {
   const client = new DynamoDBClient({
