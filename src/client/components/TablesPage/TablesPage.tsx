@@ -1,8 +1,9 @@
 import Loader from "@/client/components/util/Loader";
 import { useTables } from "@/client/lib/tables";
-import { ActionIcon, Box, Container, Table, Text } from "@mantine/core";
+import { ActionIcon, Anchor, Box, Container, Table, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useMemo } from "react";
+import { Link } from "react-router-dom";
 
 export default function TablesPage() {
   const { data, isFetching, error } = useTables();
@@ -32,7 +33,11 @@ export default function TablesPage() {
           <Table.Tbody>
             {tables.map((table) => (
               <Table.Tr key={table.TableName}>
-                <Table.Td>{table.TableName}</Table.Td>
+                <Table.Td>
+                  <Anchor component={Link} to={`/table/${table.TableName}`}>
+                    {table.TableName}
+                  </Anchor>
+                </Table.Td>
                 <Table.Td>{table.ItemCount?.toLocaleString()}</Table.Td>
                 <Table.Td align="right">
                   <ActionIcon variant="transparent" c="gray">
