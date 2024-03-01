@@ -1,7 +1,7 @@
 import ItemsTable from "@/client/components/features/items/ItemsTable";
 import Loader from "@/client/components/util/Loader";
 import { useTable } from "@/client/lib/tables";
-import { Box, Container, Text } from "@mantine/core";
+import { Box, Container, Stack, Text, Title } from "@mantine/core";
 import { useParams } from "react-router-dom";
 
 export default function TablePage() {
@@ -16,9 +16,16 @@ export default function TablePage() {
 
   return (
     <Container py="md">
-      <Box>
-        <ItemsTable table={data.Table} />
-      </Box>
+      <Stack>
+        <Box>
+          <Title order={2} size="h3">
+            {data.Table.TableName}
+          </Title>
+        </Box>
+        <Box>
+          <ItemsTable table={data.Table} />
+        </Box>
+      </Stack>
     </Container>
   );
 }
