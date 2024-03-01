@@ -1,9 +1,11 @@
+import Layout from "@/client/components/Layout";
+import TablesPage from "@/client/components/TablesPage/TablesPage";
 import { createBrowserRouter } from "react-router-dom";
-import TablesPage from "./components/TablesPage/TablesPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <TablesPage />,
+    element: <Layout />,
+    children: [{ path: "/", element: <TablesPage /> }],
   },
 ]);
