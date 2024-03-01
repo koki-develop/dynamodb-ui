@@ -2,7 +2,7 @@ import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
 import { SerializedAttributeValue } from "@/shared/util";
 import { TableDescription } from "@aws-sdk/client-dynamodb";
-import { Box, Button, Paper, Table, Text } from "@mantine/core";
+import { Box, Button, Paper, Table, Text, TextProps } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useMemo } from "react";
@@ -45,27 +45,31 @@ export default function TablePage({ table }: ItemsTableProps) {
   }
 
   return (
-    <Paper shadow="xs" px="md">
-      <Table horizontalSpacing="md" verticalSpacing="md">
-        <Table.Thead>
-          <Table.Tr>
-            {headers.map((header, i) => (
-              <Table.Th key={i}>{header}</Table.Th>
-            ))}
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {items.map((item, i) => (
-            <Table.Tr key={i}>
-              {headers.map((header, j) => (
-                <Table.Td key={j} valign="top">
-                  <ItemsTableCellValue value={item[header]} />
-                </Table.Td>
+    <Paper shadow="xs">
+      <Table.ScrollContainer minWidth={500}>
+        <Box px="sm">
+          <Table horizontalSpacing="md" verticalSpacing="md">
+            <Table.Thead>
+              <Table.Tr>
+                {headers.map((header, i) => (
+                  <Table.Th key={i}>{header}</Table.Th>
+                ))}
+              </Table.Tr>
+            </Table.Thead>
+            <Table.Tbody>
+              {items.map((item, i) => (
+                <Table.Tr key={i}>
+                  {headers.map((header, j) => (
+                    <Table.Td key={j} valign="top">
+                      <ItemsTableCellValue value={item[header]} />
+                    </Table.Td>
+                  ))}
+                </Table.Tr>
               ))}
-            </Table.Tr>
-          ))}
-        </Table.Tbody>
-      </Table>
+            </Table.Tbody>
+          </Table>
+        </Box>
+      </Table.ScrollContainer>
     </Paper>
   );
 }
@@ -75,23 +79,54 @@ type ItemsTableCellValueProps = {
 };
 
 function ItemsTableCellValue({ value }: ItemsTableCellValueProps) {
+  const textProps: TextProps = useMemo(
+    () => ({
+      style: { whiteSpace: "nowrap" },
+    }),
+    [],
+  );
+
   if (value == undefined) {
-    return <Text c="red">undefined</Text>;
+    return (
+      <Text {...textProps} c="red">
+        undefined
+      </Text>
+    );
   }
   if (value.S) {
-    return <Text c="green">{JSON.stringify(value.S)}</Text>;
+    return (
+      <Text {...textProps} c="green">
+        {JSON.stringify(value.S)}
+      </Text>
+    );
   }
   if (value.N) {
-    return <Text c="blue">{value.N}</Text>;
+    return (
+      <Text {...textProps} c="blue">
+        {value.N}
+      </Text>
+    );
   }
   if (value.B) {
-    return <Text c="pink">{value.B}</Text>;
+    return (
+      <Text {...textProps} c="pink">
+        {value.B}
+      </Text>
+    );
   }
   if (value.BOOL != null) {
-    return <Text c="grape">{value.BOOL.toString()}</Text>;
+    return (
+      <Text {...textProps} c="grape">
+        {value.BOOL.toString()}
+      </Text>
+    );
   }
   if (value.NULL) {
-    return <Text c="gray">null</Text>;
+    return (
+      <Text {...textProps} c="gray">
+        null
+      </Text>
+    );
   }
   if (value.L) {
     return <ItemsTableCellValueList value={value} />;
