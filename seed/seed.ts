@@ -4,10 +4,12 @@ import {
   DynamoDBClient,
 } from "@aws-sdk/client-dynamodb";
 import { marshall } from "@aws-sdk/util-dynamodb";
+import example from "./items/example";
 import posts from "./items/posts";
 import users from "./items/users";
-import postsTableInput from "./tables/posts";
-import usersTableInput from "./tables/users";
+import exampleTable from "./tables/example";
+import postsTable from "./tables/posts";
+import usersTable from "./tables/users";
 
 (async () => {
   const client = new DynamoDBClient({
@@ -18,10 +20,11 @@ import usersTableInput from "./tables/users";
     },
   });
 
-  await client.send(new CreateTableCommand(usersTableInput));
-  await client.send(new CreateTableCommand(postsTableInput));
+  await client.send(new CreateTableCommand(usersTable));
+  await client.send(new CreateTableCommand(postsTable));
+  await client.send(new CreateTableCommand(exampleTable));
 
-  for (const [table, items] of Object.entries({ users, posts })) {
+  for (const [table, items] of Object.entries({ users, posts, example })) {
     await client.send(
       new BatchWriteItemCommand({
         RequestItems: {
