@@ -13,7 +13,7 @@ import { TablesController } from "./lib/controllers/tables";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = import.meta.env.PROD
-  ? path.resolve(__dirname, "../")
+  ? path.resolve(__dirname, "../client")
   : process.cwd();
 
 const wrapHandler = (handler: RequestHandler) => {
