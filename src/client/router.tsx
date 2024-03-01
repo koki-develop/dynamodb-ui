@@ -9,7 +9,7 @@ export const router = createBrowserRouter([
     element: <Layout />,
     children: [
       { path: "/", element: <TablesPage /> },
-      { path: "table/:tableName", element: <TablePage /> },
+      { path: "table/:name", element: <TablePage /> },
     ],
   },
 ]);

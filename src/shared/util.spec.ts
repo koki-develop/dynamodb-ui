@@ -1,12 +1,16 @@
 import { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { describe, expect, it } from "vitest";
-import { deserializeAttribute, serializeAttribute } from "./util";
+import {
+  SerializedAttributeValue,
+  deserializeAttribute,
+  serializeAttribute,
+} from "./util";
 
 describe("util", () => {
   describe("serializeAttribute", () => {
     const testCases: {
       input: Record<string, AttributeValue>;
-      expected: Record<string, unknown>;
+      expected: Record<string, SerializedAttributeValue>;
     }[] = [
       {
         input: {
@@ -100,7 +104,7 @@ describe("util", () => {
 
   describe("deserializeAttribute", () => {
     const testCases: {
-      input: Record<string, unknown>;
+      input: Record<string, SerializedAttributeValue>;
       expected: Record<string, AttributeValue>;
     }[] = [
       {
