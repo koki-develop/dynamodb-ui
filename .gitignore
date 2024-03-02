@@ -1,3 +1,6 @@
+# Package
+dynamodb-ui-*.tgz
+
 # Logs
 logs
 *.log
