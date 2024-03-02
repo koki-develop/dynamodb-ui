@@ -1,14 +1,7 @@
 import Loader from "@/client/components/util/Loader";
+import Page from "@/client/components/util/Page";
 import { useTables } from "@/client/lib/tables";
-import {
-  ActionIcon,
-  Anchor,
-  Box,
-  Container,
-  Paper,
-  Table,
-  Text,
-} from "@mantine/core";
+import { ActionIcon, Anchor, Box, Paper, Table, Text } from "@mantine/core";
 import { IconDots } from "@tabler/icons-react";
 import { useMemo } from "react";
 import { Link } from "react-router-dom";
@@ -28,7 +21,7 @@ export default function TablesPage() {
   }
 
   return (
-    <Container py="md" size="sm">
+    <Page>
       <Box>
         <Paper shadow="xs" px="md">
           <Table horizontalSpacing="md" verticalSpacing="md">
@@ -59,6 +52,6 @@ export default function TablesPage() {
           </Table>
         </Paper>
       </Box>
-    </Container>
+    </Page>
   );
 }
