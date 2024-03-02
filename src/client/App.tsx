@@ -7,6 +7,7 @@ import { theme } from "./theme";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
+      retry: false,
       gcTime: 0,
       refetchOnWindowFocus: false,
     },
