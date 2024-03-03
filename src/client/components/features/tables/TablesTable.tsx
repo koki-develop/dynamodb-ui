@@ -9,7 +9,7 @@ export type TablesTableProps = {
 export default function TablesTable({ tables }: TablesTableProps) {
   return (
     <Paper shadow="xs" px="md">
-      <Table horizontalSpacing="md" verticalSpacing="md">
+      <Table horizontalSpacing="md" verticalSpacing="sm">
         <Table.Thead>
           <Table.Tr>
             <Table.Th>Table Name</Table.Th>
