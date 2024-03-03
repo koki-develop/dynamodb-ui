@@ -2,10 +2,19 @@ import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
 import { SerializedAttributeValue } from "@/shared/util";
 import { TableDescription } from "@aws-sdk/client-dynamodb";
-import { Box, Button, Paper, Table, Text, TextProps } from "@mantine/core";
+import {
+  Box,
+  Button,
+  Paper,
+  ScrollArea,
+  Table,
+  Text,
+  TextProps,
+} from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
 import { useMemo } from "react";
+import classes from "./ItemsTable.module.css";
 
 export type ItemsTableProps = {
   table: TableDescription;
@@ -13,7 +22,6 @@ export type ItemsTableProps = {
 
 export default function TablePage({ table }: ItemsTableProps) {
   const { data, isFetching, error } = useItems(table.TableName!);
-
   const items = useMemo(() => data?.Items ?? [], [data]);
 
   const hashKeyName = useMemo(() => {
@@ -46,10 +54,10 @@ export default function TablePage({ table }: ItemsTableProps) {
 
   return (
     <Paper shadow="xs">
-      <Table.ScrollContainer minWidth={500} type="native">
+      <ScrollArea.Autosize mah="90dvh" type="scroll">
         <Box px="sm">
           <Table horizontalSpacing="sm">
-            <Table.Thead>
+            <Table.Thead className={classes.header}>
               <Table.Tr>
                 {headers.map((header, i) => (
                   <Table.Th key={i}>{header}</Table.Th>
@@ -69,7 +77,7 @@ export default function TablePage({ table }: ItemsTableProps) {
             </Table.Tbody>
           </Table>
         </Box>
-      </Table.ScrollContainer>
+      </ScrollArea.Autosize>
     </Paper>
   );
 }
