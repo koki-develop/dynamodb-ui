@@ -23,6 +23,9 @@ export class ItemsController {
     return res.status(200).json({
       ...response,
       Items: response.Items?.map((item) => serializeAttribute(item)),
+      LastEvaluatedKey:
+        response.LastEvaluatedKey &&
+        serializeAttribute(response.LastEvaluatedKey),
     });
   }
 }
