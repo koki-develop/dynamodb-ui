@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-ui",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Koki Sato <kou.pg.0131@gmail.com>",
   "homepage": "https://github.com/koki-develop/dynamodb-ui",
   "repository": {
