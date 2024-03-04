@@ -6,7 +6,15 @@ export const listItems = async (
 ): Promise<{
   Items: Record<string, SerializedAttributeValue>[];
 }> => {
-  const response = await fetch(`/api/tables/${table}/items`);
+  const response = await fetch(`/api/items/list`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: table,
+      limit: 300,
+      // exclusiveStartKey: , // TODO: implement
+    }),
+  });
   const json = await response.json();
   if (!response.ok) throw new Error(JSON.stringify(json));
 

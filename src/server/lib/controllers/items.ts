@@ -6,9 +6,8 @@ import { serializeAttribute } from "../../../shared/util";
 export class ItemsController {
   constructor(private readonly dbClient: DynamoDBClient) {}
 
-  // GET /tables/:name/items
   async listItems(req: Request, res: Response) {
-    const result = listItemsInputSchema.safeParse(req.params);
+    const result = listItemsInputSchema.safeParse(req.body);
     if (!result.success) return res.status(400).json(result.error);
     const { data: input } = result;
 

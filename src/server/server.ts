@@ -34,24 +34,24 @@ const wrapHandler = (handler: RequestHandler) => {
   const itemsController = new ItemsController(dbClient);
 
   const router = express.Router();
-  router.get(
-    "/tables",
+  router.post(
+    "/tables/list",
     wrapHandler(tablesController.listTables.bind(tablesController)),
   );
-  router.get(
-    "/tables/:name",
+  router.post(
+    "/tables/get",
     wrapHandler(tablesController.getTable.bind(tablesController)),
   );
   router.post(
-    "/tables",
+    "/tables/create",
     wrapHandler(tablesController.createTable.bind(tablesController)),
   );
-  router.delete(
-    "/tables/:name",
+  router.post(
+    "/tables/delete",
     wrapHandler(tablesController.deleteTable.bind(tablesController)),
   );
-  router.get(
-    "/tables/:name/items",
+  router.post(
+    "/items/list",
     wrapHandler(itemsController.listItems.bind(itemsController)),
   );
   router.use(

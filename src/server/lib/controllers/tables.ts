@@ -1,4 +1,10 @@
 import {
+  createTableInputSchema,
+  deleteTableInputSchema,
+  getTableInputSchema,
+  listTablesInputSchema,
+} from "@/shared/types";
+import {
   AttributeDefinition,
   CreateTableCommand,
   DeleteTableCommand,
@@ -9,19 +15,12 @@ import {
   TableDescription,
 } from "@aws-sdk/client-dynamodb";
 import { Request, Response } from "express";
-import {
-  createTableInputSchema,
-  deleteTableInputSchema,
-  getTableInputSchema,
-  listTablesInputSchema,
-} from "../../../shared/types";
 
 export class TablesController {
   constructor(private readonly dbClient: DynamoDBClient) {}
 
-  // GET /tables
   async listTables(req: Request, res: Response) {
-    const result = listTablesInputSchema.safeParse(req.query);
+    const result = listTablesInputSchema.safeParse(req.body);
     if (!result.success) return res.status(400).json(result.error);
     const { data: input } = result;
 
@@ -42,9 +41,8 @@ export class TablesController {
     });
   }
 
-  // GET /tables/:name
   async getTable(req: Request, res: Response) {
-    const result = getTableInputSchema.safeParse(req.params);
+    const result = getTableInputSchema.safeParse(req.body);
     if (!result.success) return res.status(400).json(result.error);
     const { data: input } = result;
 
@@ -95,7 +93,7 @@ export class TablesController {
   }
 
   async deleteTable(req: Request, res: Response) {
-    const result = deleteTableInputSchema.safeParse(req.params);
+    const result = deleteTableInputSchema.safeParse(req.body);
     if (!result.success) return res.status(400).json(result.error);
     const { data: input } = result;
 
