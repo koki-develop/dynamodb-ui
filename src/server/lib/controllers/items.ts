@@ -1,7 +1,7 @@
 import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
 import { Request, Response } from "express";
 import { listItemsInputSchema } from "../../../shared/types";
-import { serializeAttribute } from "../../../shared/util";
+import { deserializeAttribute, serializeAttribute } from "../../../shared/util";
 
 export class ItemsController {
   constructor(private readonly dbClient: DynamoDBClient) {}
@@ -15,7 +15,9 @@ export class ItemsController {
       new ScanCommand({
         TableName: input.name,
         Limit: input.limit ?? 300,
-        ExclusiveStartKey: input.exclusiveStartKey,
+        ExclusiveStartKey:
+          input.exclusiveStartKey &&
+          deserializeAttribute(input.exclusiveStartKey),
       }),
     );
 
