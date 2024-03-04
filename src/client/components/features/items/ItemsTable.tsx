@@ -1,3 +1,4 @@
+import ErrorAlert from "@/client/components/util/ErrorText";
 import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
 import { SerializedAttributeValue } from "@/shared/util";
@@ -13,16 +14,24 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useInView } from "react-intersection-observer";
 import classes from "./ItemsTable.module.css";
 
 export type ItemsTableProps = {
   table: TableDescription;
 };
 
-export default function TablePage({ table }: ItemsTableProps) {
-  const { data, isFetching, error } = useItems(table.TableName!);
-  const items = useMemo(() => data?.Items ?? [], [data]);
+export default function ItemsTable({ table }: ItemsTableProps) {
+  const { data, isFetching, hasNextPage, fetchNextPage, error } = useItems(
+    table.TableName!,
+  );
+  const { ref, inView } = useInView();
+
+  const items = useMemo(() => {
+    if (!data) return [];
+    return data.pages.flatMap((page) => page.Items ?? []);
+  }, [data]);
 
   const hashKeyName = useMemo(() => {
     return table.KeySchema!.find((key) => key.KeyType === "HASH")!
@@ -46,39 +55,50 @@ export default function TablePage({ table }: ItemsTableProps) {
       });
   }, [hashKeyName, items, rangeKeyName]);
 
-  if (isFetching) return <Loader />;
-  if (error) {
-    console.error(error);
-    return <Text c="red">{error.toString()}</Text>;
-  }
+  useEffect(() => {
+    if (!inView) return;
+    if (!hasNextPage) return;
+    if (isFetching) return;
+    fetchNextPage();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [inView]);
 
   return (
-    <Paper shadow="xs">
-      <ScrollArea.Autosize mah="90dvh" type="scroll">
-        <Box px="sm">
-          <Table horizontalSpacing="sm">
-            <Table.Thead className={classes.header}>
-              <Table.Tr>
-                {headers.map((header, i) => (
-                  <Table.Th key={i}>{header}</Table.Th>
-                ))}
-              </Table.Tr>
-            </Table.Thead>
-            <Table.Tbody>
-              {items.map((item, i) => (
-                <Table.Tr key={i}>
-                  {headers.map((header, j) => (
-                    <Table.Td key={j} valign="top">
-                      <ItemsTableCellValue value={item[header]} />
-                    </Table.Td>
+    <Box>
+      {error && <ErrorAlert error={error} />}
+
+      <Paper shadow="xs">
+        <ScrollArea.Autosize mah="90dvh" type="scroll">
+          <Box px="sm">
+            <Table horizontalSpacing="sm">
+              <Table.Thead className={classes.header}>
+                <Table.Tr>
+                  {headers.map((header, i) => (
+                    <Table.Th key={i}>{header}</Table.Th>
                   ))}
                 </Table.Tr>
-              ))}
-            </Table.Tbody>
-          </Table>
-        </Box>
-      </ScrollArea.Autosize>
-    </Paper>
+              </Table.Thead>
+              <Table.Tbody>
+                {items.map((item, i) => (
+                  <Table.Tr key={i}>
+                    {headers.map((header, j) => (
+                      <Table.Td key={j} valign="top">
+                        <ItemsTableCellValue value={item[header]} />
+                      </Table.Td>
+                    ))}
+                  </Table.Tr>
+                ))}
+              </Table.Tbody>
+            </Table>
+          </Box>
+          {hasNextPage && (
+            <Box ref={ref}>
+              <Loader />
+            </Box>
+          )}
+        </ScrollArea.Autosize>
+      </Paper>
+    </Box>
   );
 }
 
