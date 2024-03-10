@@ -1,5 +1,4 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
-import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
 import { SerializedAttributeValue } from "@/shared/util";
 import { TableDescription } from "@aws-sdk/client-dynamodb";
@@ -8,6 +7,7 @@ import {
   Button,
   Paper,
   ScrollArea,
+  Skeleton,
   Table,
   Text,
   TextProps,
@@ -88,14 +88,19 @@ export default function ItemsTable({ table }: ItemsTableProps) {
                     ))}
                   </Table.Tr>
                 ))}
+
+                {hasNextPage && (
+                  <Table.Tr ref={ref}>
+                    {headers.map((_, j) => (
+                      <Table.Td key={j} valign="top">
+                        <Skeleton width="80%">Loading</Skeleton>
+                      </Table.Td>
+                    ))}
+                  </Table.Tr>
+                )}
               </Table.Tbody>
             </Table>
           </Box>
-          {hasNextPage && (
-            <Box ref={ref}>
-              <Loader />
-            </Box>
-          )}
         </ScrollArea.Autosize>
       </Paper>
     </Box>
