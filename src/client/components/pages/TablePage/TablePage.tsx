@@ -1,4 +1,5 @@
 import ItemsTable from "@/client/components/features/items/ItemsTable";
+import TableSummary from "@/client/components/features/tables/TableSummary";
 import Loader from "@/client/components/util/Loader";
 import Page from "@/client/components/util/Page";
 import { useTable } from "@/client/lib/tables";
@@ -27,6 +28,9 @@ export default function TablePage() {
             <Title order={2} size="h3">
               {data.Table.TableName}
             </Title>
+          </Box>
+          <Box>
+            <TableSummary table={data.Table} />
           </Box>
           <Box>
             <ItemsTable table={data.Table} />
