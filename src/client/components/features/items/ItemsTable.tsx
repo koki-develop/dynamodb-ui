@@ -161,7 +161,7 @@ function ItemsTableCellValue({ value }: ItemsTableCellValueProps) {
       </Text>
     );
   }
-  if (value.L) {
+  if (value.L || value.SS || value.NS || value.BS) {
     return <ItemsTableCellValueList value={value} />;
   }
   if (value.M) {
