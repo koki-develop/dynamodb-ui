@@ -1,4 +1,5 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
+import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
 import { SerializedAttributeValue } from "@/shared/util";
 import { TableDescription } from "@aws-sdk/client-dynamodb";
@@ -23,9 +24,8 @@ export type ItemsTableProps = {
 };
 
 export default function ItemsTable({ table }: ItemsTableProps) {
-  const { data, isFetching, hasNextPage, fetchNextPage, error } = useItems(
-    table.TableName!,
-  );
+  const { data, isLoading, isFetching, hasNextPage, fetchNextPage, error } =
+    useItems(table.TableName!);
   const { ref, inView } = useInView();
 
   const items = useMemo(() => {
@@ -66,43 +66,46 @@ export default function ItemsTable({ table }: ItemsTableProps) {
   return (
     <Box>
       {error && <ErrorAlert error={error} />}
-
-      <Paper shadow="xs">
-        <ScrollArea.Autosize mah="90dvh" type="scroll">
-          <Box px="sm">
-            <Table horizontalSpacing="sm">
-              <Table.Thead className={classes.header}>
-                <Table.Tr>
-                  {headers.map((header, i) => (
-                    <Table.Th key={i}>{header}</Table.Th>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <Paper shadow="xs">
+          <ScrollArea.Autosize mah="90dvh" type="scroll">
+            <Box px="sm">
+              <Table horizontalSpacing="sm">
+                <Table.Thead className={classes.header}>
+                  <Table.Tr>
+                    {headers.map((header, i) => (
+                      <Table.Th key={i}>{header}</Table.Th>
+                    ))}
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>
+                  {items.map((item, i) => (
+                    <Table.Tr key={i}>
+                      {headers.map((header, j) => (
+                        <Table.Td key={j} valign="top">
+                          <ItemsTableCellValue value={item[header]} />
+                        </Table.Td>
+                      ))}
+                    </Table.Tr>
                   ))}
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody>
-                {items.map((item, i) => (
-                  <Table.Tr key={i}>
-                    {headers.map((header, j) => (
-                      <Table.Td key={j} valign="top">
-                        <ItemsTableCellValue value={item[header]} />
-                      </Table.Td>
-                    ))}
-                  </Table.Tr>
-                ))}
 
-                {hasNextPage && (
-                  <Table.Tr ref={ref}>
-                    {headers.map((_, j) => (
-                      <Table.Td key={j} valign="top">
-                        <Skeleton width="80%">Loading</Skeleton>
-                      </Table.Td>
-                    ))}
-                  </Table.Tr>
-                )}
-              </Table.Tbody>
-            </Table>
-          </Box>
-        </ScrollArea.Autosize>
-      </Paper>
+                  {hasNextPage && (
+                    <Table.Tr ref={ref}>
+                      {headers.map((_, j) => (
+                        <Table.Td key={j} valign="top">
+                          <Skeleton width="80%">Loading</Skeleton>
+                        </Table.Td>
+                      ))}
+                    </Table.Tr>
+                  )}
+                </Table.Tbody>
+              </Table>
+            </Box>
+          </ScrollArea.Autosize>
+        </Paper>
+      )}
     </Box>
   );
 }

@@ -11,7 +11,7 @@ export type PageProps = {
 
 export default function Page({ children, error, breadcrumbs }: PageProps) {
   return (
-    <Container py="md">
+    <Container py="md" size="xl">
       <Stack>
         <Breadcrumbs>
           {breadcrumbs.map((breadcrumb) => (

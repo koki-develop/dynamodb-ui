@@ -9,7 +9,7 @@ import { useParams } from "react-router-dom";
 
 export default function TablePage() {
   const name = useParams<{ name: string }>().name as string;
-  const { data, isFetching, error } = useTable(name);
+  const { data, isLoading, error } = useTable(name);
 
   const breadcrumbs = useMemo(
     () => [
@@ -21,7 +21,7 @@ export default function TablePage() {
 
   return (
     <Page breadcrumbs={breadcrumbs} error={error}>
-      {isFetching && <Loader />}
+      {isLoading && <Loader />}
       {data && (
         <Stack>
           <Box>
