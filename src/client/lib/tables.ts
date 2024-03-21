@@ -1,14 +1,17 @@
+import { ListTablesInput } from "@/shared/types";
 import { TableDescription } from "@aws-sdk/client-dynamodb";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
-export const listTables = async (): Promise<{
+export const listTables = async (
+  input: ListTablesInput,
+): Promise<{
   Tables: TableDescription[];
-  ExclusiveStartTableName?: string;
+  LastEvaluatedTableName?: string;
 }> => {
   const response = await fetch("/api/tables/list", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({}),
+    body: JSON.stringify(input),
   });
   const json = await response.json();
   if (!response.ok) throw new Error(JSON.stringify(json));
@@ -31,9 +34,18 @@ export const getTable = async (
 };
 
 export const useTables = () => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ["tables"],
-    queryFn: listTables,
+    initialPageParam: null,
+    queryFn: async ({ pageParam }: { pageParam: string | null }) => {
+      return await listTables({
+        limit: 100,
+        exclusiveStartTableName: pageParam ?? undefined,
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      return lastPage.LastEvaluatedTableName ?? null;
+    },
   });
 };
 
