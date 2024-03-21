@@ -5,9 +5,9 @@ export default function Layout() {
   return (
     <Box>
       <Paper component="header" shadow="xs" radius={0}>
-        <Container classNames={{ root: "flex" }} py="xs">
+        <Container classNames={{ root: "flex" }} size="xl" py="xs">
           <Anchor component={Link} to="/">
-            <Title order={1} size="h2">
+            <Title order={1} size="h4">
               DynamoDB UI
             </Title>
           </Anchor>
