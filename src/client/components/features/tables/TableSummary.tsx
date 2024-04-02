@@ -45,16 +45,14 @@ export default function TableSummary({ table }: TableSummaryProps) {
             <Text c="gray" size="sm">
               Sort Key
             </Text>
-            <Text>
-              {rangeKeyAttribute ? (
-                <>
-                  {rangeKeyAttribute?.AttributeName} (
-                  {rangeKeyAttribute?.AttributeType})
-                </>
-              ) : (
-                "-"
-              )}
-            </Text>
+            {rangeKeyAttribute ? (
+              <Text>
+                {rangeKeyAttribute?.AttributeName} (
+                {rangeKeyAttribute?.AttributeType})
+              </Text>
+            ) : (
+              <Text c="dimmed">-</Text>
+            )}
           </Box>
         </Box>
 
