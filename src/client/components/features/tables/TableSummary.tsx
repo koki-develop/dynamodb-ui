@@ -58,7 +58,7 @@ export default function TableSummary({ table }: TableSummaryProps) {
 
         <Divider />
 
-        {table.ItemCount && (
+        {table.ItemCount != null && (
           <Box>
             <Text c="gray" size="sm">
               Item Count
@@ -67,7 +67,7 @@ export default function TableSummary({ table }: TableSummaryProps) {
           </Box>
         )}
 
-        {table.TableSizeBytes && (
+        {table.TableSizeBytes != null && (
           <Box>
             <Text c="gray" size="sm">
               Table Size
