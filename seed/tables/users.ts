@@ -1,4 +1,4 @@
-import { CreateTableCommandInput } from "@aws-sdk/client-dynamodb";
+import type { CreateTableCommandInput } from "@aws-sdk/client-dynamodb";
 
 const input: CreateTableCommandInput = {
   TableName: "users",

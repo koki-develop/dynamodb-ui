@@ -1,8 +1,8 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
 import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/items";
-import { SerializedAttributeValue } from "@/shared/util";
-import { TableDescription } from "@aws-sdk/client-dynamodb";
+import type { SerializedAttributeValue } from "@/shared/util";
+import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import {
   Skeleton,
   Table,
   Text,
-  TextProps,
+  type TextProps,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";

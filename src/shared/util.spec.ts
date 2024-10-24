@@ -1,7 +1,7 @@
-import { AttributeValue } from "@aws-sdk/client-dynamodb";
+import type { AttributeValue } from "@aws-sdk/client-dynamodb";
 import { describe, expect, it } from "vitest";
 import {
-  SerializedAttributeValue,
+  type SerializedAttributeValue,
   deserializeAttribute,
   serializeAttribute,
 } from "./util";

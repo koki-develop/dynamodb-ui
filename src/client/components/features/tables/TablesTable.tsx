@@ -1,4 +1,4 @@
-import { TableDescription } from "@aws-sdk/client-dynamodb";
+import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import { Anchor, Paper, Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 

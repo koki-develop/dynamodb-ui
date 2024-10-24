@@ -5,16 +5,16 @@ import {
   listTablesInputSchema,
 } from "@/shared/types";
 import {
-  AttributeDefinition,
+  type AttributeDefinition,
   CreateTableCommand,
   DeleteTableCommand,
   DescribeTableCommand,
-  DynamoDBClient,
-  KeySchemaElement,
+  type DynamoDBClient,
+  type KeySchemaElement,
   ListTablesCommand,
-  TableDescription,
+  type TableDescription,
 } from "@aws-sdk/client-dynamodb";
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 
 export class TablesController {
   constructor(private readonly dbClient: DynamoDBClient) {}

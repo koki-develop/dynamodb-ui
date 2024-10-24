@@ -1,5 +1,5 @@
-import { DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
-import { Request, Response } from "express";
+import { type DynamoDBClient, ScanCommand } from "@aws-sdk/client-dynamodb";
+import type { Request, Response } from "express";
 import { listItemsInputSchema } from "../../../shared/types";
 import { deserializeAttribute, serializeAttribute } from "../../../shared/util";
 

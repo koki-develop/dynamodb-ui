@@ -1,12 +1,12 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import express, {
-  NextFunction,
-  Request,
-  RequestHandler,
-  Response,
-} from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import express, {
+  type NextFunction,
+  type Request,
+  type RequestHandler,
+  type Response,
+} from "express";
 import { createServer } from "vite";
 import { ItemsController } from "./lib/controllers/items";
 import { TablesController } from "./lib/controllers/tables";

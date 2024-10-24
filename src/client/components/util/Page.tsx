@@ -1,6 +1,6 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
 import { Anchor, Box, Breadcrumbs, Container, Stack } from "@mantine/core";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
 export type PageProps = {
