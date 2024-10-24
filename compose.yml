@@ -2,7 +2,7 @@ services:
   # https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBLocal.DownloadingAndRunning.html
   dynamodb-local:
     command: "-jar DynamoDBLocal.jar -sharedDb -dbPath ./data"
-    image: "amazon/dynamodb-local:latest"
+    image: "amazon/dynamodb-local:2.5.2"
     ports:
       - "8000:8000"
     volumes:
