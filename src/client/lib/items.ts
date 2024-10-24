@@ -1,4 +1,4 @@
-import { SerializedAttributeValue } from "@/shared/util";
+import type { SerializedAttributeValue } from "@/shared/util";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export const listItems = async (

@@ -1,5 +1,5 @@
-import { ListTablesInput } from "@/shared/types";
-import { TableDescription } from "@aws-sdk/client-dynamodb";
+import type { ListTablesInput } from "@/shared/types";
+import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const listTables = async (

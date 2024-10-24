@@ -1,6 +1,6 @@
 import {
-  DefaultMantineColor,
-  MantineColorsTuple,
+  type DefaultMantineColor,
+  type MantineColorsTuple,
   createTheme,
 } from "@mantine/core";
 

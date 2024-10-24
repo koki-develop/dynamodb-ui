@@ -1,4 +1,4 @@
-import { TableDescription } from "@aws-sdk/client-dynamodb";
+import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import { Box, Card, Divider, Stack, Text } from "@mantine/core";
 import prettyBytes from "pretty-bytes";
 import { useMemo } from "react";
