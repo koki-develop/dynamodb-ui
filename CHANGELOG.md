@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.3](https://github.com/koki-develop/dynamodb-ui/compare/v0.0.1...v0.0.3) (2024-10-24)
+
+
+### Miscellaneous Chores
+
+* release 0.0.3 ([e68b75e](https://github.com/koki-develop/dynamodb-ui/commit/e68b75e1a0a1474e86f27f0a781360a9c523c3e4))
+
 ## 0.0.1 (2024-10-24)
 
 
