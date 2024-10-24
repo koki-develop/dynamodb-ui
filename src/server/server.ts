@@ -1,5 +1,5 @@
-import path from "path";
-import { fileURLToPath } from "url";
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import express, {
   type NextFunction,
@@ -36,26 +36,25 @@ const wrapHandler = (handler: RequestHandler) => {
   const router = express.Router();
   router.post(
     "/tables/list",
-    wrapHandler(tablesController.listTables.bind(tablesController)),
+    wrapHandler((req, res) => tablesController.listTables(req, res)),
   );
   router.post(
     "/tables/get",
-    wrapHandler(tablesController.getTable.bind(tablesController)),
+    wrapHandler((req, res) => tablesController.getTable(req, res)),
   );
   router.post(
     "/tables/create",
-    wrapHandler(tablesController.createTable.bind(tablesController)),
+    wrapHandler((req, res) => tablesController.createTable(req, res)),
   );
   router.post(
     "/tables/delete",
-    wrapHandler(tablesController.deleteTable.bind(tablesController)),
+    wrapHandler((req, res) => tablesController.deleteTable(req, res)),
   );
   router.post(
     "/items/list",
-    wrapHandler(itemsController.listItems.bind(itemsController)),
+    wrapHandler((req, res) => itemsController.listItems(req, res)),
   );
   router.use(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     (error: Error, _req: Request, res: Response, _next: NextFunction) => {
       console.error(error);
       return res.status(500).json({ error: error });
