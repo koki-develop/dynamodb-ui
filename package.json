@@ -12,9 +12,7 @@
   "bin": {
     "dynamodb-ui": "dist/server/server.js"
   },
-  "files": [
-    "dist"
-  ],
+  "files": ["dist"],
   "scripts": {
     "dev": "vite-node ./src/server/server.ts",
     "test": "vitest",
@@ -25,17 +23,12 @@
     "build:server": "vite build --outDir dist/server --ssr src/server/server.ts",
     "prepublishOnly": "npm run build",
     "postbuild": "node ./postbuild.cjs",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "biome check",
     "preview": "vite preview",
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{js,ts,tsx}": [
-      "eslint --fix"
-    ],
-    "*.{html,js,ts,tsx}": [
-      "prettier --write"
-    ]
+    "*.{cjs,js,ts,tsx,json}": ["biome check --write"]
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.525.0",
