@@ -54,7 +54,7 @@ export default function ItemsTable({ table }: ItemsTableProps) {
           <Loader />
         </Box>
       ) : (
-        <Paper shadow="xs">
+        <Paper withBorder>
           <ScrollArea.Autosize mah="90dvh" type="scroll">
             <Box px="sm">
               <Table horizontalSpacing="sm">
