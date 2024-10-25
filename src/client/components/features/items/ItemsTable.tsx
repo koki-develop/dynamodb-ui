@@ -1,6 +1,6 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
 import Loader from "@/client/components/util/Loader";
-import { useItems } from "@/client/lib/items";
+import { useItems } from "@/client/lib/hooks";
 import type { SerializedAttributeValue } from "@/shared/util";
 import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import {
@@ -8,64 +8,47 @@ import {
   Button,
   Paper,
   ScrollArea,
-  Skeleton,
   Table,
   Text,
   type TextProps,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconCaretDownFilled, IconCaretRightFilled } from "@tabler/icons-react";
-import { useEffect, useMemo } from "react";
-import { useInView } from "react-intersection-observer";
 import classes from "./ItemsTable.module.css";
 
 export type ItemsTableProps = {
   table: TableDescription;
 };
 
+// TODO: pagination
 export default function ItemsTable({ table }: ItemsTableProps) {
-  const { data, isLoading, isFetching, hasNextPage, fetchNextPage, error } =
-    useItems(table.TableName!);
-  const { ref, inView } = useInView();
+  const { data, isLoading, error } = useItems({ TableName: table.TableName });
 
-  const items = useMemo(() => {
-    if (!data) return [];
-    return data.pages.flatMap((page) => page.Items ?? []);
-  }, [data]);
+  const items = data?.pages.flatMap((page) => page.Items ?? []) ?? [];
 
-  const hashKeyName = useMemo(() => {
-    return table.KeySchema!.find((key) => key.KeyType === "HASH")!
-      .AttributeName;
-  }, [table]);
+  const hashKeyName = table.KeySchema?.find(
+    (key) => key.KeyType === "HASH",
+  )?.AttributeName;
 
-  const rangeKeyName = useMemo(() => {
-    return table.KeySchema?.find((key) => key.KeyType === "RANGE")
-      ?.AttributeName;
-  }, [table]);
+  const rangeKeyName = table.KeySchema?.find(
+    (key) => key.KeyType === "RANGE",
+  )?.AttributeName;
 
-  const headers = useMemo(() => {
-    return items
-      .reduce<string[]>((acc, item) => {
-        return Array.from(new Set([...acc, ...Object.keys(item)]));
-      }, [])
-      .sort((a) => {
-        if (a === hashKeyName) return -1;
-        if (a === rangeKeyName) return -1;
-        return 0;
-      });
-  }, [hashKeyName, items, rangeKeyName]);
-
-  useEffect(() => {
-    if (!inView) return;
-    if (!hasNextPage) return;
-    if (isFetching) return;
-    fetchNextPage();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inView]);
+  const headers = items
+    .reduce<string[]>((acc, item) => {
+      const keys = Object.keys(item);
+      return Array.from(new Set(acc.concat(keys)));
+    }, [])
+    .sort((a) => {
+      if (a === hashKeyName) return -1;
+      if (a === rangeKeyName) return -1;
+      return 0;
+    });
 
   return (
     <Box>
       {error && <ErrorAlert error={error} />}
+
       {isLoading ? (
         <Loader />
       ) : (
@@ -75,31 +58,22 @@ export default function ItemsTable({ table }: ItemsTableProps) {
               <Table horizontalSpacing="sm">
                 <Table.Thead className={classes.header}>
                   <Table.Tr>
-                    {headers.map((header, i) => (
-                      <Table.Th key={i}>{header}</Table.Th>
+                    {headers.map((header) => (
+                      <Table.Th key={header}>{header}</Table.Th>
                     ))}
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
                   {items.map((item, i) => (
+                    // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
                     <Table.Tr key={i}>
-                      {headers.map((header, j) => (
-                        <Table.Td key={j} valign="top">
+                      {headers.map((header) => (
+                        <Table.Td key={header} valign="top">
                           <ItemsTableCellValue value={item[header]} />
                         </Table.Td>
                       ))}
                     </Table.Tr>
                   ))}
-
-                  {hasNextPage && (
-                    <Table.Tr ref={ref}>
-                      {headers.map((_, j) => (
-                        <Table.Td key={j} valign="top">
-                          <Skeleton width="80%">Loading</Skeleton>
-                        </Table.Td>
-                      ))}
-                    </Table.Tr>
-                  )}
                 </Table.Tbody>
               </Table>
             </Box>
@@ -115,14 +89,9 @@ type ItemsTableCellValueProps = {
 };
 
 function ItemsTableCellValue({ value }: ItemsTableCellValueProps) {
-  const textProps: TextProps = useMemo(
-    () => ({
-      style: { whiteSpace: "nowrap" },
-    }),
-    [],
-  );
+  const textProps: TextProps = { style: { whiteSpace: "nowrap" } };
 
-  if (value == undefined) {
+  if (value == null) {
     return (
       <Text {...textProps} c="red">
         undefined
@@ -177,7 +146,7 @@ function ItemsTableCellValue({ value }: ItemsTableCellValueProps) {
 function ItemsTableCellValueList({ value }: ItemsTableCellValueProps) {
   const [opened, { open, close }] = useDisclosure();
 
-  const items = useMemo(() => value?.L ?? [], [value]);
+  const items = value?.L ?? [];
 
   return (
     <>
@@ -203,6 +172,7 @@ function ItemsTableCellValueList({ value }: ItemsTableCellValueProps) {
       {opened && (
         <Box className="pl-2">
           {items.map((item, i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <Box key={i} className="flex gap-1">
               <Text c="dimmed">{i}:</Text>
               <ItemsTableCellValue value={item} />
@@ -217,7 +187,7 @@ function ItemsTableCellValueList({ value }: ItemsTableCellValueProps) {
 function ItemsTableCellValueMap({ value }: ItemsTableCellValueProps) {
   const [opened, { open, close }] = useDisclosure();
 
-  const map = useMemo(() => value?.M ?? {}, [value]);
+  const map = value?.M ?? {};
 
   return (
     <div>
@@ -243,6 +213,7 @@ function ItemsTableCellValueMap({ value }: ItemsTableCellValueProps) {
       {opened && (
         <Box className="pl-2">
           {Object.entries(map).map(([key, value], i) => (
+            // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
             <Box key={i} className="flex gap-1">
               <Text c="dimmed">{key}:</Text>
               <ItemsTableCellValue value={value} />
