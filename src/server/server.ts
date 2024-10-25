@@ -68,7 +68,7 @@ const main = async (options: Options) => {
   router.use(
     (error: Error, _req: Request, res: Response, _next: NextFunction) => {
       console.error(error);
-      return res.status(500).json({ error: error });
+      return res.status(500).json({ error });
     },
   );
 
