@@ -22,7 +22,10 @@ export type ItemsTableProps = {
 
 // TODO: pagination
 export default function ItemsTable({ table }: ItemsTableProps) {
-  const { data, isLoading, error } = useItems({ TableName: table.TableName });
+  const { data, isLoading, error } = useItems({
+    TableName: table.TableName,
+    Limit: 100,
+  });
 
   const items = data?.pages.flatMap((page) => page.Items ?? []) ?? [];
 
