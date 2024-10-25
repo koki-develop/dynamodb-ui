@@ -35,25 +35,26 @@ const wrapHandler = (handler: RequestHandler) => {
 
   const router = express.Router();
   router.post(
-    "/tables/list",
+    "/listTables",
     wrapHandler((req, res) => tablesController.listTables(req, res)),
   );
   router.post(
-    "/tables/get",
-    wrapHandler((req, res) => tablesController.getTable(req, res)),
+    "/describeTable",
+    wrapHandler((req, res) => tablesController.describeTable(req, res)),
   );
   router.post(
-    "/tables/create",
+    "/createTable",
     wrapHandler((req, res) => tablesController.createTable(req, res)),
   );
   router.post(
-    "/tables/delete",
+    "/deleteTable",
     wrapHandler((req, res) => tablesController.deleteTable(req, res)),
   );
   router.post(
-    "/items/list",
-    wrapHandler((req, res) => itemsController.listItems(req, res)),
+    "/scan",
+    wrapHandler((req, res) => itemsController.scan(req, res)),
   );
+
   router.use(
     (error: Error, _req: Request, res: Response, _next: NextFunction) => {
       console.error(error);

@@ -16,7 +16,7 @@ export class TablesController {
     return res.status(200).json(response);
   }
 
-  async getTable(req: Request, res: Response) {
+  async describeTable(req: Request, res: Response) {
     const input = JSON.parse(req.body);
     const response = await this.dbClient.send(new DescribeTableCommand(input));
     // TODO: return 404 if table not found

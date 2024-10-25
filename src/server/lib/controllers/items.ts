@@ -5,7 +5,7 @@ import type { Request, Response } from "express";
 export class ItemsController {
   constructor(private readonly dbClient: DynamoDBClient) {}
 
-  async listItems(req: Request, res: Response) {
+  async scan(req: Request, res: Response) {
     const input = JSON.parse(req.body);
 
     const response = await this.dbClient.send(
