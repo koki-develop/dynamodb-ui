@@ -37,6 +37,13 @@ const main = async (options: Options) => {
   const controller = new Controller(dbClient);
 
   const router = express.Router();
+
+  if (!import.meta.env.PROD) {
+    router.use((_req, _res, next) => {
+      setTimeout(next, 1000);
+    });
+  }
+
   router.post(
     "/listTables",
     _wrapHandler((req, res) => controller.listTables(req, res)),
