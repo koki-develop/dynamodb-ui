@@ -1,24 +1,43 @@
 import TablesTable from "@/client/components/features/tables/TablesTable";
-import Loader from "@/client/components/util/Loader";
 import Page from "@/client/components/util/Page";
 import { useTables } from "@/client/lib/hooks";
-import { useMemo } from "react";
+import { Box, Button, Loader, Text } from "@mantine/core";
+import { useCallback, useMemo } from "react";
+
+const breadcrumbs = [{ title: "Tables", to: "/" }];
 
 export default function TablesPage() {
-  const { data, isLoading, isFetching, error } = useTables({ Limit: 100 });
-
-  const breadcrumbs = useMemo(() => [{ title: "Tables", to: "/" }], []);
+  const { data, isLoading, isFetching, fetchNextPage, hasNextPage, error } =
+    useTables({ Limit: 100 });
 
   const names = useMemo(() => {
     return data?.pages.flatMap((page) => page.TableNames ?? []) ?? [];
   }, [data]);
 
+  const loadMore = useCallback(() => {
+    fetchNextPage();
+  }, [fetchNextPage]);
+
   return (
     <Page breadcrumbs={breadcrumbs} error={error}>
-      {!isLoading && <TablesTable names={names} />}
-      {isFetching && <Loader />}
+      {!isLoading &&
+        (names.length === 0 ? (
+          <Text>No tables found.</Text>
+        ) : (
+          <TablesTable names={names} />
+        ))}
 
-      {/* TODO: load more */}
+      {isFetching && (
+        <Box className="flex justify-center" py="md">
+          <Loader classNames={{ root: "flex justify-center" }} />
+        </Box>
+      )}
+
+      {!isFetching && hasNextPage && (
+        <Box className="flex justify-center" py="md">
+          <Button onClick={loadMore}>Load more</Button>
+        </Box>
+      )}
     </Page>
   );
 }
