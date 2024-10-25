@@ -1,5 +1,8 @@
-import type { ListTablesInput } from "@/shared/types";
-import type { TableDescription } from "@aws-sdk/client-dynamodb";
+import type {
+  DescribeTableInput,
+  ListTablesInput,
+  TableDescription,
+} from "@aws-sdk/client-dynamodb";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const listTables = async (
@@ -8,7 +11,7 @@ export const listTables = async (
   Tables: TableDescription[];
   LastEvaluatedTableName?: string;
 }> => {
-  const response = await fetch("/api/tables/list", {
+  const response = await fetch("/api/listTables", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
@@ -19,13 +22,13 @@ export const listTables = async (
   return json;
 };
 
-export const getTable = async (
-  name: string,
+export const describeTable = async (
+  input: DescribeTableInput,
 ): Promise<{ Table: TableDescription }> => {
-  const response = await fetch(`/api/tables/get`, {
+  const response = await fetch("/api/describeTable", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ name }),
+    body: JSON.stringify(input),
   });
   const json = await response.json();
   if (!response.ok) throw new Error(JSON.stringify(json));
@@ -39,8 +42,8 @@ export const useTables = () => {
     initialPageParam: null,
     queryFn: async ({ pageParam }: { pageParam: string | null }) => {
       return await listTables({
-        limit: 100,
-        exclusiveStartTableName: pageParam ?? undefined,
+        Limit: 100,
+        ExclusiveStartTableName: pageParam ?? undefined,
       });
     },
     getNextPageParam: (lastPage) => {
@@ -49,9 +52,9 @@ export const useTables = () => {
   });
 };
 
-export const useTable = (name: string) => {
+export const useTable = (input: DescribeTableInput) => {
   return useQuery({
-    queryKey: ["table", name],
-    queryFn: () => getTable(name),
+    queryKey: ["table", input.TableName],
+    queryFn: () => describeTable(input),
   });
 };
