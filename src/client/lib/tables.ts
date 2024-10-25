@@ -1,16 +1,15 @@
 import type {
   DescribeTableInput,
+  DescribeTableOutput,
   ListTablesInput,
+  ListTablesOutput,
   TableDescription,
 } from "@aws-sdk/client-dynamodb";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 
 export const listTables = async (
   input: ListTablesInput,
-): Promise<{
-  Tables: TableDescription[];
-  LastEvaluatedTableName?: string;
-}> => {
+): Promise<ListTablesOutput> => {
   const response = await fetch("/api/listTables", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -24,7 +23,7 @@ export const listTables = async (
 
 export const describeTable = async (
   input: DescribeTableInput,
-): Promise<{ Table: TableDescription }> => {
+): Promise<DescribeTableOutput> => {
   const response = await fetch("/api/describeTable", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
