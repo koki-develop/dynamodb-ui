@@ -94,12 +94,14 @@ describe("util", () => {
       },
     ];
 
-    testCases.forEach((testCase) => {
-      it(`should serialize ${JSON.stringify(testCase.input)} to ${JSON.stringify(testCase.expected)}`, () => {
+    for (const testCase of testCases) {
+      it(`should serialize ${JSON.stringify(
+        testCase.input,
+      )} to ${JSON.stringify(testCase.expected)}`, () => {
         const actual = serializeAttribute(testCase.input);
         expect(actual).toEqual(testCase.expected);
       });
-    });
+    }
   });
 
   describe("deserializeAttribute", () => {
@@ -189,11 +191,13 @@ describe("util", () => {
       },
     ];
 
-    testCases.forEach((testCase) => {
-      it(`should deserialize ${JSON.stringify(testCase.input)} to ${JSON.stringify(testCase.expected)}`, () => {
+    for (const testCase of testCases) {
+      it(`should deserialize ${JSON.stringify(
+        testCase.input,
+      )} to ${JSON.stringify(testCase.expected)}`, () => {
         const actual = deserializeAttribute(testCase.input);
         expect(actual).toEqual(testCase.expected);
       });
-    });
+    }
   });
 });

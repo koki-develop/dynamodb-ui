@@ -15,13 +15,10 @@ export const serializeAttribute = (
 ) => {
   return Object.entries(attribute).reduce<
     Record<string, SerializedAttributeValue>
-  >(
-    (result, [key, value]) => ({
-      ...result,
-      [key]: serializeAttributeValue(value),
-    }),
-    {},
-  );
+  >((result, [key, value]) => {
+    result[key] = serializeAttributeValue(value);
+    return result;
+  }, {});
 };
 
 export const serializeAttributeValue = (
@@ -40,10 +37,10 @@ export const deserializeAttribute = (
   attribute: Record<string, SerializedAttributeValue>,
 ): Record<string, AttributeValue> => {
   return Object.entries(attribute).reduce<Record<string, AttributeValue>>(
-    (result, [key, value]) => ({
-      ...result,
-      [key]: deserializeAttributeValue(value),
-    }),
+    (result, [key, value]) => {
+      result[key] = deserializeAttributeValue(value);
+      return result;
+    },
     {},
   );
 };
