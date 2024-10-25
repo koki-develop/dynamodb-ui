@@ -1,12 +1,11 @@
-import type { TableDescription } from "@aws-sdk/client-dynamodb";
-import { Anchor, Paper, Table } from "@mantine/core";
-import { Link } from "react-router-dom";
+import { Paper, Table } from "@mantine/core";
+import TablesTableRow from "./TablesTableRow";
 
 export type TablesTableProps = {
-  tables: TableDescription[];
+  names: string[];
 };
 
-export default function TablesTable({ tables }: TablesTableProps) {
+export default function TablesTable({ names }: TablesTableProps) {
   return (
     <Paper shadow="xs" px="md">
       <Table horizontalSpacing="md" verticalSpacing="sm">
@@ -14,24 +13,11 @@ export default function TablesTable({ tables }: TablesTableProps) {
           <Table.Tr>
             <Table.Th>Table Name</Table.Th>
             <Table.Th>Item Count</Table.Th>
-            {/* <Table.Th /> */}
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {tables.map((table) => (
-            <Table.Tr key={table.TableName}>
-              <Table.Td>
-                <Anchor component={Link} to={`/table/${table.TableName}`}>
-                  {table.TableName}
-                </Anchor>
-              </Table.Td>
-              <Table.Td>{table.ItemCount?.toLocaleString()}</Table.Td>
-              {/* <Table.Td align="right">
-                <ActionIcon variant="transparent" c="gray">
-                  <IconDots />
-                </ActionIcon>
-              </Table.Td> */}
-            </Table.Tr>
+          {names.map((name) => (
+            <TablesTableRow key={name} name={name} />
           ))}
         </Table.Tbody>
       </Table>
