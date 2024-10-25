@@ -54,6 +54,7 @@
     "@types/react-dom": "18.2.19",
     "@vitejs/plugin-react-swc": "3.6.0",
     "autoprefixer": "10.4.17",
+    "babel-plugin-react-compiler": "^19.0.0-beta-8a03594-20241020",
     "concurrently": "8.2.2",
     "husky": "9.0.11",
     "lint-staged": "15.2.2",
