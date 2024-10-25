@@ -4,7 +4,7 @@ import { Link, Outlet } from "react-router-dom";
 export default function Layout() {
   return (
     <Box>
-      <Paper component="header" shadow="xs" radius={0}>
+      <Paper component="header" withBorder radius={0}>
         <Container classNames={{ root: "flex" }} size="xl" py="xs">
           <Anchor component={Link} to="/">
             <Title order={1} size="h4">
