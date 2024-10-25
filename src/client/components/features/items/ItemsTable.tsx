@@ -1,11 +1,11 @@
 import ErrorAlert from "@/client/components/util/ErrorText";
-import Loader from "@/client/components/util/Loader";
 import { useItems } from "@/client/lib/hooks";
 import type { SerializedAttributeValue } from "@/shared/util";
 import type { TableDescription } from "@aws-sdk/client-dynamodb";
 import {
   Box,
   Button,
+  Loader,
   Paper,
   ScrollArea,
   Table,
@@ -50,7 +50,9 @@ export default function ItemsTable({ table }: ItemsTableProps) {
       {error && <ErrorAlert error={error} />}
 
       {isLoading ? (
-        <Loader />
+        <Box className="flex justify-center" py="md">
+          <Loader />
+        </Box>
       ) : (
         <Paper shadow="xs">
           <ScrollArea.Autosize mah="90dvh" type="scroll">
