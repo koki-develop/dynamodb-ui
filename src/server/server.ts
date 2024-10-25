@@ -8,8 +8,7 @@ import express, {
   type Response,
 } from "express";
 import { createServer } from "vite";
-import { ItemsController } from "./lib/controllers/items";
-import { TablesController } from "./lib/controllers/tables";
+import { Controller } from "./controller";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = import.meta.env.PROD
@@ -30,29 +29,28 @@ const wrapHandler = (handler: RequestHandler) => {
   });
 
   const dbClient = new DynamoDBClient(); // TODO: pass configurations from args
-  const tablesController = new TablesController(dbClient);
-  const itemsController = new ItemsController(dbClient);
+  const controller = new Controller(dbClient);
 
   const router = express.Router();
   router.post(
     "/listTables",
-    wrapHandler((req, res) => tablesController.listTables(req, res)),
+    wrapHandler((req, res) => controller.listTables(req, res)),
   );
   router.post(
     "/describeTable",
-    wrapHandler((req, res) => tablesController.describeTable(req, res)),
+    wrapHandler((req, res) => controller.describeTable(req, res)),
   );
   router.post(
     "/createTable",
-    wrapHandler((req, res) => tablesController.createTable(req, res)),
+    wrapHandler((req, res) => controller.createTable(req, res)),
   );
   router.post(
     "/deleteTable",
-    wrapHandler((req, res) => tablesController.deleteTable(req, res)),
+    wrapHandler((req, res) => controller.deleteTable(req, res)),
   );
   router.post(
     "/scan",
-    wrapHandler((req, res) => itemsController.scan(req, res)),
+    wrapHandler((req, res) => controller.scan(req, res)),
   );
 
   router.use(
