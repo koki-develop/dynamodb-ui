@@ -1,6 +1,5 @@
-import Loader from "@/client/components/util/Loader";
 import { useTable } from "@/client/lib/hooks";
-import { Anchor, Table } from "@mantine/core";
+import { Anchor, Loader, Table } from "@mantine/core";
 import { Link } from "react-router-dom";
 
 export type TablesTableRowProps = {
@@ -19,9 +18,9 @@ export default function TablesTableRow({ name }: TablesTableRowProps) {
       </Table.Td>
       <Table.Td>
         {isLoading ? (
-          <Loader />
+          <Loader size="xs" />
         ) : (
-          (data?.Table?.ItemCount?.toLocaleString() ?? "-")
+          data?.Table?.ItemCount?.toLocaleString()
         )}
       </Table.Td>
     </Table.Tr>
