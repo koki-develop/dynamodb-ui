@@ -1,5 +1,6 @@
 import { useTable } from "@/client/lib/hooks";
 import { Anchor, Loader, Table } from "@mantine/core";
+import prettyBytes from "pretty-bytes";
 import { Link } from "react-router-dom";
 
 export type TablesTableRowProps = {
@@ -16,13 +17,22 @@ export default function TablesTableRow({ name }: TablesTableRowProps) {
           {name}
         </Anchor>
       </Table.Td>
-      <Table.Td>
-        {isLoading ? (
-          <Loader size="xs" />
-        ) : (
-          data?.Table?.ItemCount?.toLocaleString()
-        )}
-      </Table.Td>
+
+      {isLoading ? (
+        <>
+          <Table.Td>
+            <Loader size="xs" />
+          </Table.Td>
+          <Table.Td>
+            <Loader size="xs" />
+          </Table.Td>
+        </>
+      ) : (
+        <>
+          <Table.Td>{data?.Table?.ItemCount?.toLocaleString()}</Table.Td>
+          <Table.Td>{prettyBytes(data?.Table?.TableSizeBytes ?? 0)}</Table.Td>
+        </>
+      )}
     </Table.Tr>
   );
 }

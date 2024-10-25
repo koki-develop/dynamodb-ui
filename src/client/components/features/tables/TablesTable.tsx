@@ -13,6 +13,7 @@ export default function TablesTable({ names }: TablesTableProps) {
           <Table.Tr>
             <Table.Th>Table Name</Table.Th>
             <Table.Th>Item Count</Table.Th>
+            <Table.Th>Table Size</Table.Th>
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
