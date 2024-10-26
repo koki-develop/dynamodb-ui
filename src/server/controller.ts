@@ -21,7 +21,6 @@ export class Controller {
   async describeTable(req: Request, res: Response) {
     const { body } = req;
     const response = await this.dbClient.send(new DescribeTableCommand(body));
-    // TODO: return 404 if table not found
     return res.status(200).json(response);
   }
 
