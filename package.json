@@ -1,6 +1,6 @@
 {
   "name": "dynamodb-ui",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "author": "koki-develop <kou.pg.0131@gmail.com>",
   "homepage": "https://github.com/koki-develop/dynamodb-ui",
   "repository": {
@@ -12,7 +12,9 @@
   "bin": {
     "dynamodb-ui": "dist/server/server.js"
   },
-  "files": ["dist"],
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite-node ./src/server/server.ts",
     "test": "vitest",
@@ -28,7 +30,9 @@
     "prepare": "husky"
   },
   "lint-staged": {
-    "*.{cjs,js,ts,tsx,json}": ["biome check --write"]
+    "*.{cjs,js,ts,tsx,json}": [
+      "biome check --write"
+    ]
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "3.525.0",
