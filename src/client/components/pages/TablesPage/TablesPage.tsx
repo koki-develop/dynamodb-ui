@@ -6,8 +6,14 @@ import { Box, Button, Loader, Text } from "@mantine/core";
 const breadcrumbs = [{ title: "Tables", to: "/" }];
 
 export default function TablesPage() {
-  const { data, isLoading, isFetching, fetchNextPage, hasNextPage, error } =
-    useTables({ Limit: 100 });
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+    error,
+  } = useTables({ Limit: 100 });
 
   const names = data?.pages.flatMap((page) => page.TableNames ?? []) ?? [];
 
@@ -20,15 +26,17 @@ export default function TablesPage() {
           <TablesTable names={names} />
         ))}
 
-      {isFetching && (
+      {isLoading && (
         <Box className="flex justify-center" py="md">
           <Loader classNames={{ root: "flex justify-center" }} />
         </Box>
       )}
 
-      {!isFetching && hasNextPage && (
+      {hasNextPage && (
         <Box className="flex justify-center" py="md">
-          <Button onClick={() => fetchNextPage()}>Load more</Button>
+          <Button loading={isFetchingNextPage} onClick={() => fetchNextPage()}>
+            Load more
+          </Button>
         </Box>
       )}
     </Page>
