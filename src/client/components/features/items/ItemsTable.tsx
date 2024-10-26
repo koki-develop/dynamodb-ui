@@ -48,9 +48,13 @@ export default function ItemsTable({ table }: ItemsTableProps) {
       const keys = Object.keys(item);
       return Array.from(new Set(acc.concat(keys)));
     }, [])
-    .sort((a) => {
+    .sort((a, b) => {
+      // hash key first
       if (a === hashKeyName) return -1;
+      if (b === hashKeyName) return 1;
+      // range key second
       if (a === rangeKeyName) return -1;
+      if (b === rangeKeyName) return 1;
       return 0;
     });
 
