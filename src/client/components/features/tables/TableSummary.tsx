@@ -24,18 +24,14 @@ export default function TableSummary({ table }: TableSummaryProps) {
       <Stack>
         <Box className="flex flex-col gap-2">
           <Box>
-            <Text c="gray" size="sm">
-              Partition Key
-            </Text>
+            <Text size="xs">Partition Key</Text>
             <Text>
               {hashKeyAttribute?.AttributeName} (
               {hashKeyAttribute?.AttributeType})
             </Text>
           </Box>
           <Box>
-            <Text c="gray" size="sm">
-              Sort Key
-            </Text>
+            <Text size="xs">Sort Key</Text>
             {rangeKeyAttribute ? (
               <Text>
                 {rangeKeyAttribute?.AttributeName} (
@@ -50,16 +46,12 @@ export default function TableSummary({ table }: TableSummaryProps) {
         <Divider />
 
         <Box>
-          <Text c="gray" size="sm">
-            Item Count
-          </Text>
+          <Text size="xs">Item Count</Text>
           <Text>{table.ItemCount?.toLocaleString()}</Text>
         </Box>
 
         <Box>
-          <Text c="gray" size="sm">
-            Table Size
-          </Text>
+          <Text size="xs">Table Size</Text>
           <Text>{prettyBytes(table.TableSizeBytes ?? 0)}</Text>
         </Box>
       </Stack>
