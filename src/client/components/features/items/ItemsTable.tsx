@@ -20,9 +20,15 @@ export type ItemsTableProps = {
   table: TableDescription;
 };
 
-// TODO: pagination
 export default function ItemsTable({ table }: ItemsTableProps) {
-  const { data, isLoading, error } = useItems({
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    error,
+    fetchNextPage,
+    hasNextPage,
+  } = useItems({
     TableName: table.TableName,
     Limit: 100,
   });
@@ -68,6 +74,7 @@ export default function ItemsTable({ table }: ItemsTableProps) {
                     ))}
                   </Table.Tr>
                 </Table.Thead>
+
                 <Table.Tbody>
                   {items.map((item, i) => (
                     // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -79,6 +86,20 @@ export default function ItemsTable({ table }: ItemsTableProps) {
                       ))}
                     </Table.Tr>
                   ))}
+
+                  {hasNextPage && (
+                    <Table.Tr>
+                      <Table.Td colSpan={headers.length} align="center">
+                        <Button
+                          variant="white"
+                          loading={isFetchingNextPage}
+                          onClick={() => fetchNextPage()}
+                        >
+                          Load more
+                        </Button>
+                      </Table.Td>
+                    </Table.Tr>
+                  )}
                 </Table.Tbody>
               </Table>
             </Box>
@@ -162,7 +183,7 @@ function ItemsTableCellValueList({ value }: ItemsTableCellValueProps) {
         c="orange"
         pl={0}
         size="compact-sm"
-        variant="transparent"
+        variant="white"
         leftSection={
           opened ? (
             <IconCaretDownFilled size={16} />
@@ -203,7 +224,7 @@ function ItemsTableCellValueMap({ value }: ItemsTableCellValueProps) {
         c="cyan"
         pl={0}
         size="compact-sm"
-        variant="transparent"
+        variant="white"
         leftSection={
           opened ? (
             <IconCaretDownFilled size={16} />
