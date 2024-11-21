@@ -60,7 +60,7 @@
     "autoprefixer": "10.4.20",
     "babel-plugin-react-compiler": "^19.0.0-beta-8a03594-20241020",
     "concurrently": "8.2.2",
-    "husky": "9.0.11",
+    "husky": "9.1.7",
     "lint-staged": "15.2.10",
     "postcss": "8.4.35",
     "postcss-preset-mantine": "1.13.0",
