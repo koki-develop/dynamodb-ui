@@ -62,7 +62,7 @@
     "concurrently": "8.2.2",
     "husky": "9.0.11",
     "lint-staged": "15.2.10",
-    "postcss": "8.4.35",
+    "postcss": "8.5.3",
     "postcss-preset-mantine": "1.13.0",
     "postcss-simple-vars": "7.0.1",
     "react-compiler-runtime": "^19.0.0-beta-8a03594-20241020",
